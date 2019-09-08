@@ -6,6 +6,7 @@ on init
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+    install_keyring
 
     # Load Tuxera exfat module
     insmod /system/lib/modules/texfat.ko

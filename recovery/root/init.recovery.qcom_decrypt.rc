@@ -17,12 +17,17 @@ on fs
 
 on property:init.svc.sbinhwservicemanager=running && property:hwservicemanager.ready=true
     start sbinkeymaster-3-0
+    start gatekeeper-1-0
+    start servicemanager
 
 on property:ro.crypto.fs_crypto_blkdev=*
     setprop fde.ready 0
     stop sbinqseecomd
     stop sbinhwservicemanager
     stop sbinkeymaster-3-0
+    stop gatekeeper-1-0
+    stop keystore
+    stop servicemanager
 
 service patchlevel /sbin/patchlevel.sh
     user root
@@ -40,6 +45,31 @@ service sbinqseecomd /sbin/qseecomd
     seclabel u:r:recovery:s0
 
 service sbinhwservicemanager /sbin/hwservicemanager
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+service servicemanager /sbin/servicemanager
+    user root
+    group root readproc
+    disabled
+    seclabel u:r:recovery:s0
+
+service keystore_auth /sbin/keystore_auth
+    oneshot
+    user system
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+service keystore /sbin/keystore /data/misc/keystore
+    user root
+    group root drmrpc readproc
+    disabled
+    seclabel u:r:recovery:s0
+
+service gatekeeper-1-0 /sbin/android.hardware.gatekeeper@1.0-service
     user root
     group root
     disabled

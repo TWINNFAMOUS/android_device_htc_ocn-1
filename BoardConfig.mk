@@ -47,7 +47,11 @@ TARGET_PREBUILT_KERNEL := device/htc/ocn/prebuilt/Image.lz4-dtb
 #TARGET_PLATFORM_DEVICE_BASE := /devices/soc/
 
 #Enable HW based full disk encryption
+TARGET_CRYPTFS_HW_PATH := vendor/qcom/opensource/cryptfs_hw
 TARGET_HW_DISK_ENCRYPTION := true
+
+# Use mke2fs to create ext4 images
+TARGET_USES_MKE2FS := true
 
 #TARGET_LDPRELOAD := libNimsWrap.so
 
